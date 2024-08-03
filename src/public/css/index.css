@@ -1,0 +1,36 @@
+.header-nav-list {
+    display: flex;
+    font-weight: bold;
+}
+
+.header-nav-item:not(:last-child) {
+    margin-right: 30px;
+    font-size: 15px;
+}
+
+.timestamp_content {
+    text-align: center;
+}
+
+.timestamp_header {
+    padding: 20px auto;    
+}
+
+.timestamp_form_area {
+    width: 80%;
+    height: 600px;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.timestamp_button {
+    width: 37.5%;
+    height: 250px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    padding: 20px;
+    font-size: 20px;
+}

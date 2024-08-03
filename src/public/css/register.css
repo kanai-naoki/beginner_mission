@@ -1,0 +1,50 @@
+.register_content {
+    text-align: center;
+}
+
+.register_header {
+    font-size: 18px;
+    margin: 100px 0px 20px;
+}
+
+.register_form_area {
+    width: 33%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 100%;
+}
+
+.form_name,
+.form_email,
+.form_password,
+.form_confirm_password {
+    width: 100%;
+    border-radius: 3px;
+    font-size: 18px;
+    margin: 15px auto;
+    padding: 5px auto;
+}
+
+.submit {
+    width: 100%;
+    background-color: rgb(17, 58, 243);
+    border-radius: 3px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 15px;
+    padding: 5px auto;
+    margin: 15px auto;
+}
+
+.register_loginlink {
+    font-size: 13px;
+    text-decoration: solid;
+    color: azure;
+    padding: 25px 5px;
+}
