@@ -17,9 +17,14 @@ use App\Http\Controllers\RestController;
 
 // 認証ができている場合にのみ、打刻画面に入れる
 Route::middleware('auth')->group(function () {
-    Route::get('/index', [AttendanceController::class, 'index']);
+    Route::get('/', [AttendanceController::class, 'index']);
+    Route::post('/attendance/add',[AttendanceController::class, 'workBegin']);
+    Route::post('/attendance/edit',[AttendanceController::class, 'workEnd']);
+    Route::post('/rest/add',[RestController::class, 'restBegin']);
+    Route::post('/rest/edit',[RestController::class, 'restEnd']);
 });
 
+/*
 // メール確認の通知
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -36,14 +41,5 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+*/
 
-Route::get('/register',[RegisteredUserController::class, 'create']);
-Route::post('/register',[RegisteredUserController::class, 'store']);
-Route::get('/login',[AuthenticatedSessionController::class, 'create']);
-Route::post('/login',[AuthenticatedSessionController::class, 'store']);
-Route::post('/logout',[AuthenticatedSessionController::class, 'destroy']);
- 
-Route::post('/attendance/add',[AttendanceController::class, 'workBegin']);
-Route::post('/attendance/edit',[AttendanceController::class, 'workEnd']);
-Route::post('/rest/add',[RestController::class, 'restBegin']);
-Route::post('/rest/edit',[RestController::class, 'restEnd']);

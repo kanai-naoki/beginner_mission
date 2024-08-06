@@ -25,7 +25,7 @@
 @section('content')
 <div class="timestamp_content">
   <div class="timestamp_header">
-    <h2>{{ Auth::name() }}さんお疲れ様です！</h2>
+    <h2>さんお疲れ様です！</h2>
   </div>
   <div class="timestamp_form_area">
     <form class="form" action="/attendance/add" method="post">
