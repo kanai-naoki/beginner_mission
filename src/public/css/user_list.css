@@ -1,0 +1,23 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header-nav-list {
+    display: flex;
+    font-weight: bold;
+}
+
+.header-nav-item {
+    margin-right: 30px;
+    font-size: 15px;
+}
+
+.logout_button {
+    width: 90px;
+    background-color: #ffffff;
+    border-style: none;
+    font-size: 15px;
+    font-weight: bold;
+}
+

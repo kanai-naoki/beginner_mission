@@ -16,7 +16,7 @@
     <li class="header-nav-item">
       <form class="form" action="{{ route('logout') }}" method="post">
       @csrf
-      <button type="submit">ログアウト</button>
+      <button class="logout_button" type="submit">ログアウト</button>
     </li>    
   </ul>
 </nav>
@@ -25,23 +25,35 @@
 @section('content')
 <div class="timestamp_content">
   <div class="timestamp_header">
-    <h2>さんお疲れ様です！</h2>
+    <h2>{{ $user->name }}さんお疲れ様です！</h2>
   </div>
   <div class="timestamp_form_area">
-    <form class="form" action="/attendance/add" method="post">
-      <input class="form_button" type="submit" name="attendance" value="勤務開始">
-    </form>
-    <form class="form" action="/attendance/edit" method="post">
-      @method('PATCH')
-      <input class="form_button" type="submit" name="leaving" value="勤務修了">
-    </form>
-    <form class="form" action="/rest/add">
-      <input class="form_button" type="submit" name="rest_begin" value="休憩開始">
-    </form>
-    <form class="form" action="/rest/edit">
-      @method('PATCH')
-      <input class="form_button" type="submit" name="rest_after" value="休憩終了">
-    </form>
+    <div class="timestamp_work_begin_area">  
+      <form class="form" action="/attendance/add" method="post">
+        @csrf
+        <input class="timestamp_button" type="submit" name="attendance" value="勤務開始">
+      </form>
+    </div>
+    <div class="timestamp_work_end_area">
+      <form class="form" action="/attendance/edit" method="post">
+        @csrf
+        @method('PATCH')
+        <input class="timestamp_button" type="submit" name="leaving" value="勤務終了">
+      </form>
+    </div>
+    <div class="timestamp_rest_begin_area">
+      <form class="form" action="/rest/add" method="post">
+        @csrf
+        <input class="timestamp_button" type="submit" name="rest_begin" value="休憩開始">
+      </form>
+    </div>
+    <div class="timestamp_rest_end_area">
+      <form class="form" action="/rest/edit" method="post">
+        @csrf
+        @method('PATCH')
+        <input class="timestamp_button" type="submit" name="rest_end" value="休憩終了">
+      </form>
+    </div>
   </div>
 </div>
 @endsection

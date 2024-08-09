@@ -23,10 +23,9 @@
 @endsection
 
 @section('content')
-{{-- attendanceのUIを確認しながら作成 --}}
 <div class="attendance_content">
   <div class="date_search">
-
+  {{-- 日付による検索機能を導入、前日・翌日に遷移するアイコン作成 --}}
   </div>
   <div class="search_result-table">
     @if (@isset($item))

@@ -15,15 +15,15 @@
       @csrf
       <input class="form_name" type="text" name="name" placeholder="名前" value="{{ old('name') }}" >
         @error('name')
-        {{ $message }} 
+        <p class="form_error_message">{{ $message }}</p> 
         @enderror
       <input class="form_email" type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}" >
         @error('email')
-        {{ $message }} 
+        <p class="form_error_message">{{ $message }}</p> 
         @enderror
       <input class="form_password" type="password" name="password" placeholder="パスワード">
         @error('password')
-        {{ $message }} 
+        <p class="form_error_message">{{ $message }}</p> 
         @enderror
       <input class="form_confirm_password" type="password" name="confirm_password" placeholder="確認用パスワード">
       <input class="submit" type="submit" value="会員登録">

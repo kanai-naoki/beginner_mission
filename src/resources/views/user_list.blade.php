@@ -30,17 +30,22 @@
   <div class="user_list_area">
     <table class="user_list_inner">
       <tr class="user_list_row">
-       <th class="todo-table__header">UserID</th>
-       <th class="todo-table__header">氏名</th>
-       <th class="todo-table__header">詳細</th>
+       <th class="user-list_header">UserID</th>
+       <th class="user_list_header">氏名</th>
+       <th class="user_list_header">詳細</th>
       </tr>
-      @foreach ($user_lists as $user_list)
+      {{-- @foreach ($user_lists as $user_list) --}}
       <tr class="user_list_row">
-       <td class="user_list_item">{{ $user_list->id }}</td>
-       <td class="user_list_item">{{ $user_list->name }}</td>
-       <td class="user_list_item"></td>  
+       <td class="user_list_item">家内</td>
+       <td class="user_list_item">直紀</td>
+       <td class="user_list_item">
+        {{-- <form class="form" action="/user/detail" method="get">
+        　@csrf 
+         <button type="submit">詳細</button>
+        </form> --}}     
+       </td>  
       </tr>
-      @endforeach
+      {{-- @endforeach --}}
     </table>
   </div>
 </div>
