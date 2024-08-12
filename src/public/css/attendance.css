@@ -21,8 +21,38 @@ a {
     font-weight: bold;
 }
 
+.attendance_content {
+    width: 100%;
+    height: 1100px;
+}
+
 .date_search {
     text-align: center;
 }
 
-.
+.search_result_area {
+    margin-top: 50px;
+}
+
+.search_table_inner {
+    width: 90%;
+    margin: auto;
+}
+
+table tr {
+    border-top: 1px solid #000;
+}
+
+.search_table_header,
+.search_table_item {
+    width: 18%;
+    height: 170px;
+    text-align: left;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.pagenation_area {
+    height: 110px;
+    margin: auto;
+}

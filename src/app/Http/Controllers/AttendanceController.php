@@ -17,9 +17,13 @@ class AttendanceController extends Controller
         return view('index', compact('user'));
     }
 
+    // 日をまたいだ時点で、勤務終了処理、翌日の勤務開始処理を行うように条件分岐させる
+    // if {Carbon::tomorrow('Asia/Tokyo');
+
     // 出勤時：日付・出勤時刻のカラムのみを追加する
     public function workBegin(Request $request)
-    {     
+    {   
+        var_dump('テスト');  
         $timestamp = [
             'user_id' => Auth::id(),
             'date' => new Carbon('today'),
@@ -36,7 +40,8 @@ class AttendanceController extends Controller
         $timestamp = [
             'work_end_time' => new Carbon('now')
         ];
-        Attendance::find($request->user_id->date)->update($timestamp);
+        // user_idのみを取り出して、その中から今日の日付のものを検索して更新する機能
+        Attendance::find($request->user_id)->whereDate(Carbon::today)->update($timestamp);
 
         return redirect('/');
     }
@@ -49,16 +54,18 @@ class AttendanceController extends Controller
     }
 
     //ユーザー一覧ページ
-    public function userAll ()
+    public function userAll (Request $request)
     {
         $user_lists = User::all();
-        return view('user_list', compact('user_lists'));
+        $sorts = User::Paginate(5);
+        return view('user_list', compact('user_lists', 'sorts'));
     }
 
     // ユーザー勤怠詳細ページ
-    public function userDetail ()
+    public function userDetail (Request $request)
     {
         // user_idで情報を絞り込んで、休憩時間の合計、勤務時間を計算して表示する
+        $user_works = Attendance::find($request->user_id);
         return view('user_attedance_detail');
     }
     

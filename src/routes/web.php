@@ -35,7 +35,7 @@ Route::get('/email/verify', function () {
 // 送信された電子メールを確認リンクをクリックしたときに生成されるリクエスト
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/home');
+    return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 // メール確認の再送信（確認メールの紛失・削除対策）

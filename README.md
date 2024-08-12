@@ -24,10 +24,10 @@ Atte（勤怠管理システム）
 - mysql:8.0.26
 
 ## テーブル設計
-![alt text](image.png)
+![alt text](image-2.png)
 ## ER図
-![alt text](image-1.png)
+![alt text](image.png)
 ## 環境構築
 
 ## その他（詳細情報）
-# 初心者
+
