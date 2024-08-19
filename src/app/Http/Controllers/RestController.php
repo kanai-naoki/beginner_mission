@@ -13,7 +13,7 @@ class RestController extends Controller
     public function restBegin(Request $request)
     {
         $timestamp = [
-            'rest_begin_time' => new Carbon('now')
+            'rest_begin_time' => Carbon::now()
         ];
         Rest::create($timestamp);
         
@@ -24,7 +24,7 @@ class RestController extends Controller
     public function restEnd(Request $request)
     {
         $timestamp = [
-            'rest_end_time' => new Carbon('now')
+            'rest_end_time' => Carbon::now()
         ];
         Rest::find($request->attendance_id)->update($timestamp);
 

@@ -18,6 +18,7 @@ use App\Http\Controllers\RestController;
 // 認証ができている場合にのみ、打刻画面に入れる
 Route::middleware('auth')->group(function () {
     Route::get('/', [AttendanceController::class, 'index']);
+    Route::get('/attendance/add',[AttendanceController::class, 'workBegin']);
     Route::post('/attendance/add',[AttendanceController::class, 'workBegin']);
     Route::post('/attendance/edit',[AttendanceController::class, 'workEnd']);
     Route::post('/rest/add',[RestController::class, 'restBegin']);

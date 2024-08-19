@@ -15,11 +15,6 @@ class Attendance extends Model
         'work_end_time'
     ];
 
-    public function attendance_id()
-    {
-        return $this->hasMany(Rest::class);
-    }
-
     public function relation()
     {
         return $this->belongsTo(User::class);

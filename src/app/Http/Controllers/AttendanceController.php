@@ -21,27 +21,26 @@ class AttendanceController extends Controller
     // if {Carbon::tomorrow('Asia/Tokyo');
 
     // 出勤時：日付・出勤時刻のカラムのみを追加する
-    public function workBegin(Request $request)
-    {   
-        var_dump('テスト');  
-        $timestamp = [
-            'user_id' => Auth::id(),
-            'date' => new Carbon('today'),
-            'work_begin_time' => new Carbon('now')
-        ];
-        Attendance::create($timestamp);
-        
+    public function workBegin()
+    {  
+        var_dump('user_id');
+        // $timestamp  = [
+            // 'user_id' => Auth::id(),
+            // 'date' => Carbon::today(),
+            // 'work_begin_time' => Carbon::now()
+        // ];
+        // Attendance::create($timestamp); 
         return redirect('/');
     }
 
     // 編集して、退勤時刻のカラムのみを追加する
-    public function workEnd(Request $request)
+    public function workEnd()
     {        
-        $timestamp = [
-            'work_end_time' => new Carbon('now')
+        $out = [
+            'work_end_time' => Carbon::now()
         ];
         // user_idのみを取り出して、その中から今日の日付のものを検索して更新する機能
-        Attendance::find($request->user_id)->whereDate(Carbon::today)->update($timestamp);
+        Attendance::find($request->user_id)->whereDate(Carbon::today)->update($out);
 
         return redirect('/');
     }

@@ -39,8 +39,8 @@
       </tr>
       <tr class="search_table_row">
         <td class="search_table_item">{{$item->name}}</td>
-        <td class="search_table_item">{{$item->work_begin}}</td> 
-        <td class="search_table_item">{{$item->work_end}}</td> 
+        <td class="search_table_item">{{$item->work_begin_time}}</td> 
+        <td class="search_table_item">{{$item->work_end_time}}</td> 
         {{-- <td class="search_table">{{$item->休憩時間の合計を表す変数。全部の休憩時間を足す処理}}</td> --}}
         {{-- <td class="search_table">{{$item->勤務時間の合計を表す変数。休憩時間の合計を勤務時間からの合計から引く処理}}</td> --}}
       </tr>

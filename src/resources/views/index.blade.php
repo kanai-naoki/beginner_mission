@@ -29,29 +29,27 @@
   </div>
   <div class="timestamp_form_area">
     <div class="timestamp_work_begin_area">  
-      <form class="form" action="/attendance/add" method="post">
-        @csrf
-        <input class="timestamp_button" type="submit" name="attendance" value="勤務開始">
-      </form>
+      <a class="form" href="/attendance/add" >勤務開始
+      </a>
     </div>
     <div class="timestamp_work_end_area">
       <form class="form" action="/attendance/edit" method="post">
         @csrf
         @method('PATCH')
-        <input class="timestamp_button" type="submit" name="leaving" value="勤務終了">
+        <input class="timestamp_button" type="submit" name="work_end_time" value="勤務終了">
       </form>
     </div>
     <div class="timestamp_rest_begin_area">
       <form class="form" action="/rest/add" method="post">
         @csrf
-        <input class="timestamp_button" type="submit" name="rest_begin" value="休憩開始">
+        <input class="timestamp_button" type="submit" name="rest_begin_time" value="休憩開始">
       </form>
     </div>
     <div class="timestamp_rest_end_area">
       <form class="form" action="/rest/edit" method="post">
         @csrf
         @method('PATCH')
-        <input class="timestamp_button" type="submit" name="rest_end" value="休憩終了">
+        <input class="timestamp_button" type="submit" name="rest_end_time" value="休憩終了">
       </form>
     </div>
   </div>

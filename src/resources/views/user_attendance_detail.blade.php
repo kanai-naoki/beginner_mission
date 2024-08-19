@@ -39,8 +39,8 @@
       </tr>
       <tr class="user_attendance_detail-table_row">
         {{-- <td class="user_attendance_detail-table">{{$item->date}}</td> --}}
-        {{-- <td class="user_attendance_detail-table">{{$item->work_begin}}</td>  --}}
-        {{-- <td class="user_attendance_detail-table">{{$item->work_end}</td>  --}}
+        {{-- <td class="user_attendance_detail-table">{{$item->work_begin_time}}</td>  --}}
+        {{-- <td class="user_attendance_detail-table">{{$item->work_end_time}</td>  --}}
         {{-- <td class="user_attendance_detail-table">{{$item->休憩時間の合計を表す変数。全部の休憩時間を足す処理}}</td> --}}
         {{-- <td class="user_attendance_detail-table">{{$item->勤務時間の合計を表す変数。休憩時間の合計を勤務時間からの合計から引く処理}}</td> --}}
       </tr>
