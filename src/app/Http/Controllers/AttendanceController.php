@@ -23,13 +23,13 @@ class AttendanceController extends Controller
     // 出勤時：日付・出勤時刻のカラムのみを追加する
     public function workBegin()
     {  
-        var_dump('user_id');
-        // $timestamp  = [
-            // 'user_id' => Auth::id(),
-            // 'date' => Carbon::today(),
-            // 'work_begin_time' => Carbon::now()
-        // ];
-        // Attendance::create($timestamp); 
+        var_dump(Auth::id());
+        $timestamp  = [
+            'user_id' => Auth::id(),
+            'date' => Carbon::today(),
+            'work_begin_time' => Carbon::now()
+        ];
+        Attendance::create($timestamp); 
         return redirect('/');
     }
 
