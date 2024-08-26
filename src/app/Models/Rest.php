@@ -14,9 +14,4 @@ class Rest extends Model
         'rest_end_time'
     ];
 
-    public function relation()
-    {
-        return $this->belongsTo(Attendance::class);
-    }
-
 }

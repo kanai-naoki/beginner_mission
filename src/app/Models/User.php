@@ -43,5 +43,8 @@ class User extends Authenticatable implements MustVerifyEmailContract
         'email_verified_at' => 'datetime',
     ];
 
-    
+    public function relation()
+    {
+        return $this->hasMany(attendance::class);
+    }
 }

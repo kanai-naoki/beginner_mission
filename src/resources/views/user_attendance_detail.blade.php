@@ -28,7 +28,6 @@
    <h2>氏名</h2>
   </div>
   <div class="user_attendance_detail-table">
-    @if (@isset($item))
     <table class="user_attendance_detail-table_inner">
       <tr class="user_attendance_detail-table_row">
         <th class="user_attendance_detail-table_header">日付</th>
@@ -37,19 +36,19 @@
         <th class="user_attendance_detail-table_header">休憩時間</th>
         <th class="user_attendance_detail-table_header">勤務時間</th>
       </tr>
+      @foreach ($user_works as $user_work)
       <tr class="user_attendance_detail-table_row">
-        {{-- <td class="user_attendance_detail-table">{{$item->date}}</td> --}}
-        {{-- <td class="user_attendance_detail-table">{{$item->work_begin_time}}</td>  --}}
-        {{-- <td class="user_attendance_detail-table">{{$item->work_end_time}</td>  --}}
+        <td class="user_attendance_detail-table">{{$user_work->date}}</td> 
+        <td class="user_attendance_detail-table">{{$user_work->work_begin_time}}</td>  
+        <td class="user_attendance_detail-table">{{$user_work->work_end_time}}</td>
         {{-- <td class="user_attendance_detail-table">{{$item->休憩時間の合計を表す変数。全部の休憩時間を足す処理}}</td> --}}
         {{-- <td class="user_attendance_detail-table">{{$item->勤務時間の合計を表す変数。休憩時間の合計を勤務時間からの合計から引く処理}}</td> --}}
       </tr>
-    </table>
-    @endif    
+      @endforeach
+    </table>    
   </div> 
   <div class="pagenation_area">
-    {{ $attendances->links() }}
-    {{-- 5件ごと情報を得るページネーションを作成 --}}
+    {{-- {{ $attendances->links() }} --}}
   </div>         
 </div>
 @endsection

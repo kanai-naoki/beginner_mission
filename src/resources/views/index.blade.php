@@ -11,7 +11,7 @@
       <a href="/">ホーム</a>
     </li>
     <li class="header-nav-item">
-      <a href="/attendance">日付一覧</a>
+      <a href="/user/attendance">日付一覧</a>
     </li>
     <li class="header-nav-item">
       <form class="form" action="{{ route('logout') }}" method="post">
@@ -29,28 +29,16 @@
   </div>
   <div class="timestamp_form_area">
     <div class="timestamp_work_begin_area">  
-      <a class="form" href="/attendance/add" >勤務開始
-      </a>
+      <a class="form" href="/attendance/add">勤務開始</a>
     </div>
     <div class="timestamp_work_end_area">
-      <form class="form" action="/attendance/edit" method="post">
-        @csrf
-        @method('PATCH')
-        <input class="timestamp_button" type="submit" name="work_end_time" value="勤務終了">
-      </form>
+      <a class="form" href="/attendance/edit">勤務終了</a>
     </div>
     <div class="timestamp_rest_begin_area">
-      <form class="form" action="/rest/add" method="post">
-        @csrf
-        <input class="timestamp_button" type="submit" name="rest_begin_time" value="休憩開始">
-      </form>
+      <a class="form" href="/rest/add">休憩開始</a>
     </div>
     <div class="timestamp_rest_end_area">
-      <form class="form" action="/rest/edit" method="post">
-        @csrf
-        @method('PATCH')
-        <input class="timestamp_button" type="submit" name="rest_end_time" value="休憩終了">
-      </form>
+      <a class="form" href="/rest/edit">休憩終了</a>
     </div>
   </div>
 </div>

@@ -23,12 +23,12 @@ class AttendanceController extends Controller
     // 出勤時：日付・出勤時刻のカラムのみを追加する
     public function workBegin()
     {  
-        var_dump(Auth::id());
+        
         $timestamp  = [
             'user_id' => Auth::id(),
             'date' => Carbon::today(),
             'work_begin_time' => Carbon::now()
-        ];
+        ];        
         Attendance::create($timestamp); 
         return redirect('/');
     }
@@ -39,17 +39,16 @@ class AttendanceController extends Controller
         $out = [
             'work_end_time' => Carbon::now()
         ];
-        // user_idのみを取り出して、その中から今日の日付のものを検索して更新する機能
-        Attendance::find($request->user_id)->whereDate(Carbon::today)->update($out);
+        Attendance::find(Auth::id())->whereDate('date', Carbon::today())->update($out);
 
         return redirect('/');
     }
 
-    public function pagination()
+    public function userAttendance()
     {
-        // attendance,restモデルから情報を持ってくる処理
-        $Attendances = Attendance::Paginate(5);
-        return view('attendance', compact('attendance'));
+        // attendance,restモデルから情報を持ってくる処理※itemsに配列を作って、複数のデータベースのデータを引っ張てくる
+        $attendances = Attendance::Paginate(5);
+        return view('attendance', compact( 'attendances'));
     }
 
     //ユーザー一覧ページ
@@ -65,7 +64,7 @@ class AttendanceController extends Controller
     {
         // user_idで情報を絞り込んで、休憩時間の合計、勤務時間を計算して表示する
         $user_works = Attendance::find($request->user_id);
-        return view('user_attedance_detail');
+        return view('user_attendance_detail' ,compact('user_works' ,''));
     }
     
 }

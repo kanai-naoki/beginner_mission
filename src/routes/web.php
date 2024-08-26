@@ -19,10 +19,10 @@ use App\Http\Controllers\RestController;
 Route::middleware('auth')->group(function () {
     Route::get('/', [AttendanceController::class, 'index']);
     Route::get('/attendance/add',[AttendanceController::class, 'workBegin']);
-    Route::post('/attendance/add',[AttendanceController::class, 'workBegin']);
-    Route::post('/attendance/edit',[AttendanceController::class, 'workEnd']);
-    Route::post('/rest/add',[RestController::class, 'restBegin']);
-    Route::post('/rest/edit',[RestController::class, 'restEnd']);
+    Route::get('/attendance/edit',[AttendanceController::class, 'workEnd']);
+    Route::get('/rest/add',[RestController::class, 'restBegin']);
+    Route::get('/rest/edit',[RestController::class, 'restEnd']);
+    Route::get('/user/attendance',[AttendanceController::class, 'userAttendance']);
     Route::get('/user/list', [AttendanceController::class, 'userAll']);
     Route::get('/user/detail', [AttendanceController::class, 'userDetail']);
 });

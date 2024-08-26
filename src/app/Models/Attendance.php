@@ -17,6 +17,6 @@ class Attendance extends Model
 
     public function relation()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(user::class);
     }
 }
