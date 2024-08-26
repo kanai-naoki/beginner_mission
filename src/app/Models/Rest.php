@@ -10,8 +10,13 @@ class Rest extends Model
     use HasFactory;
 
     protected $fillable = [
+        'attendance_id',
         'rest_begin_time',
         'rest_end_time'
     ];
 
+    public function attendance()
+    {
+        return $this->belongsTo(Attendance::class);
+    }
 }
