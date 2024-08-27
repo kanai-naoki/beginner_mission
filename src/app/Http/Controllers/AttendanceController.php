@@ -23,10 +23,9 @@ class AttendanceController extends Controller
     // 出勤時：日付・出勤時刻のカラムのみを追加する
     public function workBegin()
     {  
-         
         $timestamp  = [
             'user_id' => Auth::id(),
-            'date' => Carbon::today(),
+            'date' => Carbon::today()->toDateString(),
             'work_begin_time' => Carbon::now()
         ];       
         Attendance::create($timestamp); 
@@ -54,9 +53,8 @@ class AttendanceController extends Controller
     //ユーザー一覧ページ
     public function userAll (Request $request)
     {
-        $user_lists = User::all();
         $sorts = User::Paginate(5);
-        return view('user_list', compact('user_lists', 'sorts'));
+        return view('user_list', compact('sorts'));
     }
 
     // ユーザー勤怠詳細ページ

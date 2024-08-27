@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
+use App\Models\Attendance;
+use App\Models\User;
 use App\Models\Rest;
 
 class RestController extends Controller
@@ -13,6 +16,7 @@ class RestController extends Controller
     public function restBegin(Request $request)
     {
         $timestamp = [
+            'attendance_id' => Attendance::find(Auth::id())->whereDate('date', Carbon::today()),
             'rest_begin_time' => Carbon::now()
         ];
         Rest::create($timestamp);
