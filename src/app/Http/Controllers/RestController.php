@@ -13,10 +13,11 @@ use App\Models\Rest;
 class RestController extends Controller
 {
     // 休憩時：休憩時刻のカラムのみを追加する
-    public function restBegin(Request $request)
-    {
+    public function restBegin()
+    {   
+        $attendance_id = Attendance::find(Auth::id())->whereDate('date', Carbon::today())->where('work_end_time', null)->first();
         $timestamp = [
-            'attendance_id' => Attendance::find(Auth::id())->whereDate('date', Carbon::today()),
+            'attendance_id' => $attendance_id->id,  
             'rest_begin_time' => Carbon::now()
         ];
         Rest::create($timestamp);
@@ -25,12 +26,12 @@ class RestController extends Controller
     }
 
     // 休憩終了時：終了時刻のカラムのみを追加する
-    public function restEnd(Request $request)
+    public function restEnd()
     {
         $timestamp = [
             'rest_end_time' => Carbon::now()
         ];
-        Rest::find($request->attendance_id)->update($timestamp);
+        // Rest::find($request->attendance_id)->update($timestamp);
 
         return redirect('/');
     }
