@@ -31,7 +31,7 @@ class RestController extends Controller
         $timestamp = [
             'rest_end_time' => Carbon::now()
         ];
-        // Rest::find($request->attendance_id)->update($timestamp);
+        Rest::find(Auth::id())->whereDate('rest_begin_time', Carbon::today())->where('rest_end_time', null)->update($timestamp);
 
         return redirect('/');
     }
