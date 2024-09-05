@@ -16,11 +16,11 @@ class RestController extends Controller
     public function restBegin()
     {   
         $attendance_id = Attendance::find(Auth::id())->whereDate('date', Carbon::today())->where('work_end_time', null)->first();
-        $timestamp = [
+        $off_start = [
             'attendance_id' => $attendance_id->id,  
             'rest_begin_time' => Carbon::now()
         ];
-        Rest::create($timestamp);
+        Rest::create($off_start);
         
         return redirect('/');
     }
@@ -28,10 +28,10 @@ class RestController extends Controller
     // 休憩終了時：終了時刻のカラムのみを追加する
     public function restEnd()
     {
-        $timestamp = [
+        $off_end = [
             'rest_end_time' => Carbon::now()
         ];
-        Rest::find(Auth::id())->whereDate('rest_begin_time', Carbon::today())->where('rest_end_time', null)->update($timestamp);
+        Rest::find(Auth::id())->whereDate('rest_begin_time', Carbon::today())->where('rest_end_time', null)->update($off_end);
 
         return redirect('/');
     }
