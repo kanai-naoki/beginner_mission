@@ -36,13 +36,13 @@
         <th class="search_table_header">休憩時間</th>
         <th class="search_table_header">勤務時間</th>
       </tr>
-      @foreach ($attendances as $attendance)
+      @foreach ($attendance_lists as $attendance_list)
       <tr class="search_table_row">
-        <td class="search_table_item">{{$attendance->name}}</td>
-        <td class="search_table_item">{{$attendance->work_begin_time}}</td>
-        <td class="search_table_item">{{$attendance->work_end_time}}</td>  
-        {{-- <td class="search_table">{{$item->休憩時間の合計を表す変数。全部の休憩時間を足す処理}}</td> --}}
-        {{-- <td class="search_table">{{$item->勤務時間の合計を表す変数。休憩時間の合計を勤務時間からの合計から引く処理}}</td> --}}
+        <td class="search_table_item">{{$attendance_list->name}}</td>
+        <td class="search_table_item">{{$attendance_list->work_begin_time}}</td>
+        <td class="search_table_item">{{$attendance_list->work_end_time}}</td>  
+        <td class="search_table">{{$attendance_list->rest_total_time}}</td>
+        <td class="search_table">{{$attendance_list->work_really_time}}</td>
       </tr>
       @endforeach
     </table>

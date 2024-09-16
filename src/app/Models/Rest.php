@@ -15,6 +15,11 @@ class Rest extends Model
         'rest_end_time'
     ];
 
+    protected $casts = [
+        'rest_begin_time' => 'datetime',
+        'rest_end_time' => 'datetime'
+    ];
+
     public function attendance()
     {
         return $this->belongsTo(Attendance::class);

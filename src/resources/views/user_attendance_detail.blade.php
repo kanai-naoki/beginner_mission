@@ -36,13 +36,13 @@
         <th class="user_attendance_detail-table_header">休憩時間</th>
         <th class="user_attendance_detail-table_header">勤務時間</th>
       </tr>
-      @foreach ($user_works as $user_work)
+      @foreach ($attendance_lists as $attendance_list)
       <tr class="user_attendance_detail-table_row">
-        <td class="user_attendance_detail-table">{{$user_work->date}}</td> 
-        <td class="user_attendance_detail-table">{{$user_work->work_begin_time}}</td>  
-        <td class="user_attendance_detail-table">{{$user_work->work_end_time}}</td>
-        {{-- <td class="user_attendance_detail-table">{{$item->休憩時間の合計を表す変数。全部の休憩時間を足す処理}}</td> --}}
-        {{-- <td class="user_attendance_detail-table">{{$item->勤務時間の合計を表す変数。休憩時間の合計を勤務時間からの合計から引く処理}}</td> --}}
+        <td class="user_attendance_detail-table">{{$attendance_list->date}}</td> 
+        <td class="user_attendance_detail-table">{{$attendance_list->work_begin_time}}</td>  
+        <td class="user_attendance_detail-table">{{$attendance_list->work_end_time}}</td>
+        <td class="user_attendance_detail-table">{{$attendance_list->rest_total_time}}</td>
+        <td class="user_attendance_detail-table">{{$attendance_list->work_really_time}}</td>
       </tr>
       @endforeach
     </table>    
