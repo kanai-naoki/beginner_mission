@@ -8,11 +8,9 @@
 <nav class="header-nav">
   <ul class="header-nav-list">
     <li class="header-nav-item"><a href="/">ホーム</a></li>
-    {{-- 日付一覧のリンク先が不明なので、保留 <li class="header-nav-item"> 
-      <form class="form" action="/attendance/date_list" method="get">
-        <button class="header-nav__button">日付一覧</button>
-      </form>
-    </li>--}}
+    <li class="header-nav-item"> 
+      <a href="/user/attendance">日付一覧</a>
+    </li>
     <li class="header-nav-item">
       <form class="form" action="{{ route('logout') }}" method="post">
       @csrf
@@ -38,17 +36,17 @@
       </tr>
       @foreach ($attendance_lists as $attendance_list)
       <tr class="search_table_row">
-        <td class="search_table_item">{{$attendance_list->name}}</td>
-        <td class="search_table_item">{{$attendance_list->work_begin_time}}</td>
-        <td class="search_table_item">{{$attendance_list->work_end_time}}</td>  
-        <td class="search_table">{{$attendance_list->rest_total_time}}</td>
-        <td class="search_table">{{$attendance_list->work_really_time}}</td>
+        <td class="search_table_item">{{ $attendance_list['name'] }}</td>
+        <td class="search_table_item">{{ $attendance_list['work_begin_time'] }}</td>
+        <td class="search_table_item">{{ $attendance_list['work_end_time'] }}</td>  
+        <td class="search_table_item">{{ $attendance_list['rest_total_time'] }}</td>
+        <td class="search_table_item">{{ $attendance_list['work_really_time'] }}</td>
       </tr>
       @endforeach
     </table>
   </div> 
   <div class="pagenation_area">
-    {{ $attendances->links() }}
+    {{-- {{ $attendances_lists->links() }} --}}
   </div>         
 </div>
 @endsection

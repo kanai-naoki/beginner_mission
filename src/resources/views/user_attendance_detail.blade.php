@@ -38,11 +38,11 @@
       </tr>
       @foreach ($attendance_lists as $attendance_list)
       <tr class="user_attendance_detail-table_row">
-        <td class="user_attendance_detail-table">{{$attendance_list->date}}</td> 
-        <td class="user_attendance_detail-table">{{$attendance_list->work_begin_time}}</td>  
-        <td class="user_attendance_detail-table">{{$attendance_list->work_end_time}}</td>
-        <td class="user_attendance_detail-table">{{$attendance_list->rest_total_time}}</td>
-        <td class="user_attendance_detail-table">{{$attendance_list->work_really_time}}</td>
+        <td class="user_attendance_detail-table">{{ $attendance_list['date'] }}</td> 
+        <td class="user_attendance_detail-table">{{ $attendance_list['work_begin_time'] }}</td>  
+        <td class="user_attendance_detail-table">{{ $attendance_list['work_end_time'] }}</td>
+        <td class="user_attendance_detail-table">{{ $attendance_list['rest_total_time'] }}</td>
+        <td class="user_attendance_detail-table">{{ $attendance_list['work_really_time'] }}</td>
       </tr>
       @endforeach
     </table>    

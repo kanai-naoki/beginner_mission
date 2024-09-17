@@ -48,9 +48,14 @@ class AttendanceController extends Controller
     public function userAttendance()
     {
         $pdo = DB::connection()->getPdo();
+
         $sql = 'WITH work_times AS( SELECT id , TIMEDIFF(work_end_time, work_begin_time) as work_time FROM `attendances`) SELECT name, user_id, attendance_id, date, work_begin_time, work_end_time, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(work_time, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time FROM `rests` INNER JOIN `attendances` ON attendances.id = rests.attendance_id INNER JOIN `users` ON users.id = attendances.user_id INNER JOIN `work_times` ON work_times.id = attendances.id GROUP BY attendance_id';
+
         $attendance_lists = $pdo->query($sql)->fetchall();
-        dd($attendance_lists);
+        // foreach($attendance_lists as $attendance_list);
+        // $name = $attendance_list['work_begin_time'];
+        // dd($name);
+        
         
         // モデルを結合して、紐づいているテーブルのデータをすべて取得
         // $user_attendance_details = Attendance::select('user_id', 'name','attendance_id', 'date', 'work_begin_time', 'work_end_time', 'rest_begin_time', 'rest_end_time')
