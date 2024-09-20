@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
 
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rest;
 use App\Models\Attendance;
@@ -51,7 +53,22 @@ class AttendanceController extends Controller
 
         $sql = 'WITH work_times AS( SELECT id , TIMEDIFF(work_end_time, work_begin_time) as work_time FROM `attendances`) SELECT name, user_id, attendance_id, date, work_begin_time, work_end_time, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(work_time, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time FROM `rests` INNER JOIN `attendances` ON attendances.id = rests.attendance_id INNER JOIN `users` ON users.id = attendances.user_id INNER JOIN `work_times` ON work_times.id = attendances.id GROUP BY attendance_id';
 
+        // クエリで加工したデータを配列で引っ張ってくる処理
         $attendance_lists = $pdo->query($sql)->fetchall();
+    
+        // ページネーションを生成
+        $attendance_lists_pagination = collect($attendance_lists);
+        // dd($attendance_lists_pagination);
+        $perPage = 5;
+        $page = Paginator::resolveCurrentPage('page');
+        $pageData = $attendance_lists_pagination->slice(($page - 1) * $perPage, $perPage);
+        $options = [
+        'path' => Paginator::resolveCurrentPath(),
+        'pageName' => 'page'
+        ];
+
+        $paginatorDatas = new LengthAwarePaginator($pageData, $attendance_lists_pagination->count(), $perPage, $page, $options);
+        // dd($paginatorData);
         // foreach($attendance_lists as $attendance_list);
         // $name = $attendance_list['work_begin_time'];
         // dd($name);
@@ -85,7 +102,7 @@ class AttendanceController extends Controller
 
         // 編集し直した値を配列にする→ページネーション
         // $attendances = Attendance::Paginate(5);
-        return view('attendance', compact( 'attendance_lists'));
+        return view('attendance', compact( 'paginatorDatas'));
     }
 
     //ユーザー一覧ページ

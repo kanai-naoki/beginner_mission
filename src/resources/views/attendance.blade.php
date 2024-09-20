@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 @endsection
 
 @section('nav')
@@ -34,19 +35,25 @@
         <th class="search_table_header">休憩時間</th>
         <th class="search_table_header">勤務時間</th>
       </tr>
-      @foreach ($attendance_lists as $attendance_list)
+      @foreach ($paginatorDatas as $paginatorData)
       <tr class="search_table_row">
-        <td class="search_table_item">{{ $attendance_list['name'] }}</td>
-        <td class="search_table_item">{{ $attendance_list['work_begin_time'] }}</td>
-        <td class="search_table_item">{{ $attendance_list['work_end_time'] }}</td>  
-        <td class="search_table_item">{{ $attendance_list['rest_total_time'] }}</td>
-        <td class="search_table_item">{{ $attendance_list['work_really_time'] }}</td>
+        <td class="search_table_item">{{ $paginatorData['name'] }}</td>
+        <td class="search_table_item">{{ $paginatorData['work_begin_time'] }}</td>
+        <td class="search_table_item">{{ $paginatorData['work_end_time'] }}</td>  
+        <td class="search_table_item">{{ $paginatorData['rest_total_time'] }}</td>
+        <td class="search_table_item">{{ $paginatorData['work_really_time'] }}</td>
       </tr>
       @endforeach
     </table>
   </div> 
   <div class="pagenation_area">
-    {{-- {{ $attendances_lists->links() }} --}}
+    {{-- <ul class="pagination" role="navigation"> --}}
+      {{-- <li class="page-item"> --}}
+        {{-- <a class="page-link" href=""></a> --}}
+        {{-- <a class="page-link" href=""></a> --}}
+      {{-- </li> --}}
+    {{-- </ul> --}}
+    {{ $paginatorDatas->links() }}
   </div>         
 </div>
 @endsection
