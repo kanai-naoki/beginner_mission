@@ -37,11 +37,11 @@
       </tr>
       @foreach ($paginatorDatas as $paginatorData)
       <tr class="search_table_row">
-        <td class="search_table_item">{{ $paginatorData['name'] }}</td>
-        <td class="search_table_item">{{ $paginatorData['work_begin_time'] }}</td>
-        <td class="search_table_item">{{ $paginatorData['work_end_time'] }}</td>  
-        <td class="search_table_item">{{ $paginatorData['rest_total_time'] }}</td>
-        <td class="search_table_item">{{ $paginatorData['work_really_time'] }}</td>
+        <td class="search_table_item">{{ $paginatorData->name }}</td>
+        <td class="search_table_item">{{ $paginatorData->work_begin_time }}</td>
+        <td class="search_table_item">{{ $paginatorData->work_end_time }}</td>  
+        <td class="search_table_item">{{ $paginatorData->rest_total_time }}</td>
+        <td class="search_table_item">{{ $paginatorData->work_really_time }}</td>
       </tr>
       @endforeach
     </table>

@@ -34,15 +34,14 @@
        <th class="user_list_table_header">氏名</th>
        <th class="user_list_table_header">勤怠一覧</th>
       </tr>
-      @foreach ($user_lists as $user_list)
+      @foreach ($sorts as $user_list)
       <tr class="user_list_table_row">
        <td class="user_list_table_item">{{ $user_list->id }}</td>
        <td class="user_list_table_item">{{ $user_list->name }}</td>
        <td class="user_list_table_item">
-        <form class="form" action="/user/detail" method="get"> 
-          @csrf 
-          <button class="user_detail_button" type="submit">詳細</button>
-        </form>      
+        <div class="user_detail_button">
+          <a class="user_detail_link" href="/user/detail">詳細</a>
+        </div>    
        </td>  
       </tr>
       @endforeach
