@@ -24,8 +24,8 @@
 
 @section('content')
 <div class="user_attendance_detail_content">
-  <div class="user_attendance_detail_header">
-   <h2>氏名</h2>
+  <div class="user_attendance_detail_header">   
+    <h2></h2>
   </div>
   <div class="user_attendance_detail-table">
     <table class="user_attendance_detail-table_inner">
@@ -36,19 +36,19 @@
         <th class="user_attendance_detail-table_header">休憩時間</th>
         <th class="user_attendance_detail-table_header">勤務時間</th>
       </tr>
-      @foreach ($items as $item)
+      @foreach ($attendance_details as $attendance_detail)
       <tr class="user_attendance_detail-table_row">
-        <td class="user_attendance_detail-table">{{ $item->date }}</td> 
-        <td class="user_attendance_detail-table">{{ $item->work_begin_time }}</td>  
-        <td class="user_attendance_detail-table">{{ $item->work_end_time }}</td>
-        <td class="user_attendance_detail-table">{{ $item->rest_total_time }}</td>
-        <td class="user_attendance_detail-table">{{ $item->work_really_time }}</td>
+        <td class="user_attendance_detail-table_item">{{ $attendance_detail->date }}</td> 
+        <td class="user_attendance_detail-table_item">{{ $attendance_detail->work_begin_time }}</td>  
+        <td class="user_attendance_detail-table_item">{{ $attendance_detail->work_end_time }}</td>
+        <td class="user_attendance_detail-table_item">{{ $attendance_detail->rest_total_time }}</td>
+        <td class="user_attendance_detail-table_item">{{ $attendance_detail->work_really_time }}</td>
       </tr>
       @endforeach
     </table>    
   </div> 
   <div class="pagenation_area">
-    {{-- {{ $attendances->links() }} --}}
+    {{ $attendance_details->links() }} 
   </div>         
 </div>
 @endsection

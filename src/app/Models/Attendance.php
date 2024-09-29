@@ -16,11 +16,6 @@ class Attendance extends Model
         'work_end_time'
     ];
 
-    protected $casts = [
-        'work_begin_time' => 'datetime',
-        'work_end_time' => 'datetime'
-    ];
-
     public function rest()
     {
         return $this->hasMany(Rest::class);

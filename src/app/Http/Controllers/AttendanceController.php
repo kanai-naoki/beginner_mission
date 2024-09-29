@@ -58,9 +58,9 @@ class AttendanceController extends Controller
             // 入力された日付を条件として絞り込みをかける処理
             // ->where('date', $date)
             ->groupby('attendance_id')
-            // ->Paginate(5)
-            ->get();
-        dd($attendance_lists);
+            ->Paginate(5);
+    
+        // dd($attendance_lists);
         // ↓ページネーション生成まで移動
 
         // ※参考：pdo操作によって加工データを取得する方法
@@ -77,17 +77,17 @@ class AttendanceController extends Controller
 
 
         // ページネーションを生成
-        $perPage = 5;
-        $page = Paginator::resolveCurrentPage('page');
-        $pageData = $attendance_lists->slice(($page - 1) * $perPage, $perPage);
-        $options = [
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => 'page'
-        ];
+        // $perPage = 5;
+        // $page = Paginator::resolveCurrentPage('page');
+        // $pageData = $attendance_lists->slice(($page - 1) * $perPage, $perPage);
+        // $options = [
+            // 'path' => Paginator::resolveCurrentPath(),
+            // 'pageName' => 'page'
+        // ];
 
-        $paginatorDatas = new LengthAwarePaginator($pageData, $attendance_lists->count(), $perPage, $page, $options);
+        // $paginatorDatas = new LengthAwarePaginator($pageData, $attendance_lists->count(), $perPage, $page, $options);
         
-        return view('attendance', compact( 'paginatorDatas'));
+        return view('attendance', compact( 'attendance_lists'));
     }
 
     // public function index(Request $request)
@@ -117,17 +117,14 @@ class AttendanceController extends Controller
     // ユーザー勤怠詳細ページ
     public function userDetail (Request $request)
     {
-        $attendance_lists = Attendance::select('name', 'user_id',   'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
+        $attendance_details = Attendance::select('name', 'user_id',   'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
             ->join('users', 'attendances.user_id', '=', 'users.id')
             ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
-            // 入力された日付を条件として絞り込みをかける処理
             ->where('user_id', $request->user_id)
             ->groupby('attendance_id')
-            // ->Paginate(5)
-            ->get();
-        dd($attendance_lists);
-
-        return view('user_attendance_detail', compact('attendance_lists'));
+            ->Paginate(5);
+        // dd($attendance_details);
+        return view('user_attendance_detail', compact('attendance_details'));
     }   
     
     
