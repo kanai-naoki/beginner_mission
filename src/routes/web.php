@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/rest/add',[RestController::class, 'restBegin']);
     Route::get('/rest/edit',[RestController::class, 'restEnd']);
     Route::get('/user/attendance',[AttendanceController::class, 'userAttendance']);
+    Route::get('/user/attendance_date',[AttendanceController::class,'userAttendance_date']);
     Route::get('/user/list', [AttendanceController::class, 'userAll']);
     Route::get('/user/detail', [AttendanceController::class, 'userDetail']);
 });

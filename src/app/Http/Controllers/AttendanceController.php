@@ -47,20 +47,20 @@ class AttendanceController extends Controller
         return redirect('/');
     }
 
-    public function userAttendance($request)
+    public function userAttendance(Request $request)
     {
         // クエリビルダによって、加工したデータを取得
         // $date = $request->input;
 
-        $attendance_lists = DB::table('attendances')
-            ->select('name', 'user_id', 'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
+        $attendance_lists = Attendance::select('name', 'user_id',   'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
             ->join('users', 'attendances.user_id', '=', 'users.id')
             ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
             // 入力された日付を条件として絞り込みをかける処理
             // ->where('date', $date)
             ->groupby('attendance_id')
+            // ->Paginate(5)
             ->get();
-
+        dd($attendance_lists);
         // ↓ページネーション生成まで移動
 
         // ※参考：pdo操作によって加工データを取得する方法
@@ -90,6 +90,23 @@ class AttendanceController extends Controller
         return view('attendance', compact( 'paginatorDatas'));
     }
 
+    // public function index(Request $request)
+    // {
+        // $date = $request->input('date');
+        // if(isset($date)){
+            // $today = Carbon::parse($date);
+            // $yesterday = $today->copy()->subDay(1)->format('Y/m/d');
+            // $tomorrow = $today->copy()->addDay(1)->format('Y/m/d');
+            // $records = Time::where('date', [$date])->paginate(5);
+        // }else{
+            // $today = Carbon::today();
+            // $yesterday = $today->copy()->subDay(1)->format('Y/m/d');
+            // $tomorrow = $today->copy()->addDay(1)->format('Y/m/d');
+            // $date = $today->format('Y/m/d');
+            // $records = Time::where('date', [$date])->paginate(5);
+        // };
+    // }
+
     //ユーザー一覧ページ
     public function userAll ()
     {
@@ -98,19 +115,20 @@ class AttendanceController extends Controller
     }
 
     // ユーザー勤怠詳細ページ
-    public function userDetail ()
+    public function userDetail (Request $request)
     {
-        $pdo = DB::connection()->getPdo();
+        $attendance_lists = Attendance::select('name', 'user_id',   'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
+            ->join('users', 'attendances.user_id', '=', 'users.id')
+            ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
+            // 入力された日付を条件として絞り込みをかける処理
+            ->where('user_id', $request->user_id)
+            ->groupby('attendance_id')
+            // ->Paginate(5)
+            ->get();
+        dd($attendance_lists);
 
-        $sql = 'WITH work_times AS( SELECT id , TIMEDIFF(work_end_time, work_begin_time) as work_time FROM `attendances`) SELECT name, user_id, attendance_id, date, work_begin_time, work_end_time, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(work_time, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time FROM `rests` INNER JOIN `attendances` ON attendances.id = rests.attendance_id INNER JOIN `users` ON users.id = attendances.user_id INNER JOIN `work_times` ON work_times.id = attendances.id GROUP BY attendance_id';
-
-        $user_details = $pdo->query($sql)->fetchall();
-
-        $user_details_pagination = collect($user_details);
-        dd($user_details_pagination);
-        // user_idで情報を絞り込んで、休憩時間の合計、勤務時間を計算して表示する
-        
-        return view('user_attendance_detail' ,compact('',));
-    }
+        return view('user_attendance_detail', compact('attendance_lists'));
+    }   
+    
     
 }

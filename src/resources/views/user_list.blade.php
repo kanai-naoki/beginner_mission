@@ -39,9 +39,10 @@
        <td class="user_list_table_item">{{ $user_list->id }}</td>
        <td class="user_list_table_item">{{ $user_list->name }}</td>
        <td class="user_list_table_item">
-        <div class="user_detail_button">
-          <a class="user_detail_link" href="/user/detail">詳細</a>
-        </div>    
+          <form class="user_detail_get_form" action="/user/detail" method="GET">
+            <input type="hidden" name="user_id" value="{{ $user_list->id }}">
+            <button class="user_detail_button">詳細</button>
+          </form>             
        </td>  
       </tr>
       @endforeach
