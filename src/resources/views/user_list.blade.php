@@ -11,7 +11,7 @@
       <a href="/">ホーム</a>
     </li>
     <li class="header-nav-item">
-      <a href="/attendance">日付一覧</a>
+      <a href="/user/attendance">日付一覧</a>
     </li>
     <li class="header-nav-item">
       <form class="form" action="{{ route('logout') }}" method="post">

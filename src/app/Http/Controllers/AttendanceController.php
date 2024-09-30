@@ -47,7 +47,7 @@ class AttendanceController extends Controller
         return redirect('/');
     }
 
-    public function userAttendance(Request $request)
+    public function userAttendance()
     {
         // クエリビルダによって、加工したデータを取得
         // $date = $request->input;
@@ -55,8 +55,7 @@ class AttendanceController extends Controller
         $attendance_lists = Attendance::select('name', 'user_id',   'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
             ->join('users', 'attendances.user_id', '=', 'users.id')
             ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
-            // 入力された日付を条件として絞り込みをかける処理
-            // ->where('date', $date)
+            ->where('date', Carbon::today())
             ->groupby('attendance_id')
             ->Paginate(5);
     

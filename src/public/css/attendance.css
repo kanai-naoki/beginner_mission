@@ -27,7 +27,13 @@ a {
 }
 
 .date_search {
-    text-align: center;
+    display: inline-block;
+}
+
+.dete_search_subday,
+.date_search_day,
+.dete_search_addday {
+    
 }
 
 .search_result_area {
