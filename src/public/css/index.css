@@ -13,8 +13,9 @@ a {
     font-size: 15px;
 }
 
+.days_list,
 .logout_button {
-    width: 90px;
+    width: 80px;
     background-color: #ffffff;
     border-style: none;
     font-size: 15px;

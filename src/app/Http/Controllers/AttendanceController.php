@@ -18,7 +18,8 @@ class AttendanceController extends Controller
    public function index()
     {
         $user = Auth::user();
-        return view('index', compact('user'));
+        $days = Carbon::today()->toDateString();
+        return view('index', compact('user', 'days'));
     }
 
     // 日をまたいだ時点で、勤務終了処理、翌日の勤務開始処理を行うように条件分岐させる
@@ -47,19 +48,20 @@ class AttendanceController extends Controller
         return redirect('/');
     }
 
-    public function userAttendance()
+    public function userAttendance(Request $request)
     {
-        // クエリビルダによって、加工したデータを取得
-        // $date = $request->input;
+        $date = $request->input('days');
 
-        $attendance_lists = Attendance::select('name', 'user_id',   'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
-            ->join('users', 'attendances.user_id', '=', 'users.id')
-            ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
-            ->where('date', Carbon::today())
-            ->groupby('attendance_id')
-            ->Paginate(5);
-    
+            $attendance_lists = Attendance::select('name', 'user_id', 'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
+                ->join('users', 'attendances.user_id', '=', 'users.id')
+                ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
+                ->whereDate('date', $date)
+                ->groupby('attendance_id')
+                ->Paginate(5);
+       
         // dd($attendance_lists);
+        return view('attendance', compact('attendance_lists'));
+        
         // ↓ページネーション生成まで移動
 
         // ※参考：pdo操作によって加工データを取得する方法
@@ -86,7 +88,7 @@ class AttendanceController extends Controller
 
         // $paginatorDatas = new LengthAwarePaginator($pageData, $attendance_lists->count(), $perPage, $page, $options);
         
-        return view('attendance', compact( 'attendance_lists'));
+        return view('attendance', compact('attendance_lists'));
     }
 
     // public function index(Request $request)
@@ -115,15 +117,17 @@ class AttendanceController extends Controller
 
     // ユーザー勤怠詳細ページ
     public function userDetail (Request $request)
-    {
-        $attendance_details = Attendance::select('name', 'user_id',   'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
+    { 
+        $user_name = $request->all();
+        $user = collect($user_name);
+        $attendance_details = Attendance::select('name', 'user_id', 'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
             ->join('users', 'attendances.user_id', '=', 'users.id')
             ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
             ->where('user_id', $request->user_id)
             ->groupby('attendance_id')
             ->Paginate(5);
-        // dd($attendance_details);
-        return view('user_attendance_detail', compact('attendance_details'));
+        // dd($user);
+        return view('user_attendance_detail', compact('attendance_details', 'user'));
     }   
     
     

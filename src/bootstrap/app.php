@@ -42,7 +42,6 @@ $app->singleton(
 );
 
 
-    // Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4");
 
 
 /*

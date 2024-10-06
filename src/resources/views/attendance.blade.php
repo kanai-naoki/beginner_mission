@@ -25,7 +25,7 @@
 <div class="attendance_content">
   <div class="date_search">
     <a class="dete_search_subday" href="/date/search/subday">≪</a>
-    <h2 class="date_search_day">当該日付</h2>
+    <h2 class="date_search_day"></h2>
     <a class="date_search_addday" href="/date/search/addday">≫</a>
   </div>
   <div class="search_result_table">

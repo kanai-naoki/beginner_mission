@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RestController;
 
@@ -15,7 +17,25 @@ use App\Http\Controllers\RestController;
 |
 */
 
+// メール確認の通知
+// Route::get('/email/verify', function () {
+    // return view('auth.verify-email');
+// })->middleware('auth')->name('verification.notice');
+
+// 送信された電子メールを確認リンクをクリックしたときに生成されるリクエスト
+// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    // $request->fulfill();
+    // return redirect('/');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
+
+// メール確認の再送信（確認メールの紛失・削除対策）
+// Route::post('/email/verification-notification', function (Request $request) {
+    // $request->user()->sendEmailVerificationNotification();
+    // return back()->with('message', 'Verification link sent!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 // 認証ができている場合にのみ、打刻画面に入れる
+// Route::middleware('verified')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [AttendanceController::class, 'index']);
     Route::get('/attendance/add',[AttendanceController::class, 'workBegin']);

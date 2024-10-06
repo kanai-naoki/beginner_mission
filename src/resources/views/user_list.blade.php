@@ -39,8 +39,9 @@
        <td class="user_list_table_item">{{ $user_list->id }}</td>
        <td class="user_list_table_item">{{ $user_list->name }}</td>
        <td class="user_list_table_item">
-          <form class="user_detail_get_form" action="/user/detail" method="GET">
+          <form class="user_detail_get_form" action="/user/detail" method="get">
             <input type="hidden" name="user_id" value="{{ $user_list->id }}">
+            <input type="hidden" name="name" value="{{ $user_list->name }}">
             <button class="user_detail_button">詳細</button>
           </form>             
        </td>  

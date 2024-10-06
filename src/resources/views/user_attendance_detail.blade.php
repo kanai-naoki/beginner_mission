@@ -25,7 +25,7 @@
 @section('content')
 <div class="user_attendance_detail_content">
   <div class="user_attendance_detail_header">   
-    <h2></h2>
+    <h2>{{ $user['name'] }}</h2>
   </div>
   <div class="user_attendance_detail-table">
     <table class="user_attendance_detail-table_inner">

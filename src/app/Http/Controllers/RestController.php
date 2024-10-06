@@ -15,7 +15,7 @@ class RestController extends Controller
     // 休憩時：休憩時刻のカラムのみを追加する
     public function restBegin()
     {   
-        $attendance_id = Attendance::find(Auth::id())->whereDate('date', Carbon::today())->where('work_end_time', null)->first();
+        $attendance_id = Attendance::find(Auth::id())->whereDate('date', Carbon::today())->first();
         $off_start = [
             'attendance_id' => $attendance_id->id,  
             'rest_begin_time' => Carbon::now()
