@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\User;
 use App\Models\Rest;
@@ -15,7 +14,7 @@ class RestController extends Controller
     // 休憩時：休憩時刻のカラムのみを追加する
     public function restBegin()
     {   
-        $attendance_id = Attendance::find(Auth::id())->whereDate('date', Carbon::today())->first();
+        $attendance_id = Attendance::find(Auth::id())->whereDate('date', Carbon::today()->toDateString())->first();
         $off_start = [
             'attendance_id' => $attendance_id->id,  
             'rest_begin_time' => Carbon::now()
@@ -31,7 +30,7 @@ class RestController extends Controller
         $off_end = [
             'rest_end_time' => Carbon::now()
         ];
-        Rest::find(Auth::id())->whereDate('rest_begin_time', Carbon::today())->where('rest_end_time', null)->update($off_end);
+        Rest::find(Auth::id())->where('rest_end_time', null)->update($off_end);
 
         return redirect('/');
     }

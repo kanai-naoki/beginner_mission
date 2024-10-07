@@ -16,11 +16,11 @@ use App\Models\Attendance;
 class AttendanceController extends Controller
 {
    public function index()
-    {
+   {
         $user = Auth::user();
         $days = Carbon::today()->toDateString();
         return view('index', compact('user', 'days'));
-    }
+   }
 
     // 日をまたいだ時点で、勤務終了処理、翌日の勤務開始処理を行うように条件分岐させる
     // if {Carbon::tomorrow('Asia/Tokyo');
@@ -43,24 +43,32 @@ class AttendanceController extends Controller
         $out = [
             'work_end_time' => Carbon::now()
         ];
-        Attendance::find(Auth::id())->whereDate('date', Carbon::today())->where('work_end_time', null)->update($out);
+        Attendance::find(Auth::id())->whereDate('date', Carbon::today()->toDateString())->where('work_end_time', null)->update($out);
 
         return redirect('/');
     }
 
     public function userAttendance(Request $request)
     {
-        $date = $request->input('days');
-
-            $attendance_lists = Attendance::select('name', 'user_id', 'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
-                ->join('users', 'attendances.user_id', '=', 'users.id')
-                ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
-                ->whereDate('date', $date)
-                ->groupby('attendance_id')
-                ->Paginate(5);
+        // リクエストされた日付の情報を取得
+        $date = [
+            'day' => $request->days,
+            'subday' => Carbon::parse($request->days)->subDay(1)->toDateString(),
+            'addday' => Carbon::parse($request->days)->addDay(1)->toDateString()
+        ];
+ 
+        $date_format = collect($date);
+        // dd($date_format);
+        
+        //日付ごとの絞り込みを行う 
+        $attendance_lists = Attendance::select('name', 'user_id', 'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
+            ->join('users', 'attendances.user_id', '=', 'users.id')
+            ->join('rests', 'attendances.id', '=', 'rests.attendance_id')
+            ->whereDate('date', $request->days)
+            ->groupby('attendance_id')
+            ->Paginate(5);
        
-        // dd($attendance_lists);
-        return view('attendance', compact('attendance_lists'));
+        return view('attendance', compact('attendance_lists', 'date_format'));
         
         // ↓ページネーション生成まで移動
 
@@ -88,7 +96,7 @@ class AttendanceController extends Controller
 
         // $paginatorDatas = new LengthAwarePaginator($pageData, $attendance_lists->count(), $perPage, $page, $options);
         
-        return view('attendance', compact('attendance_lists'));
+        // return view('attendance', compact('attendance_lists'));
     }
 
     // public function index(Request $request)

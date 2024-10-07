@@ -24,9 +24,15 @@
 @section('content')
 <div class="attendance_content">
   <div class="date_search">
-    <a class="dete_search_subday" href="/date/search/subday">≪</a>
-    <h2 class="date_search_day"></h2>
-    <a class="date_search_addday" href="/date/search/addday">≫</a>
+    <form class="dete_search_subday" action="/user/attendance" method="get">
+        <input type="hidden" name="days" value="{{ $date_format['subday'] }}">
+        <button class="days_list">≪</button>
+    </form>
+    <h2 class="date_search_day">{{ $date_format['day'] }}</h2>
+    <form class="dete_search_addday" action="/user/attendance" method="get">
+        <input type="hidden" name="days" value="{{ $date_format['addday'] }}">
+        <button class="days_list">≫</button>
+    </form>
   </div>
   <div class="search_result_table">
     <table class="search_table_inner">

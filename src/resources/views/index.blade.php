@@ -12,7 +12,6 @@
     </li>
     <li class="header-nav-item">
       <form class="header_sort" action="/user/attendance" method="get">
-      @csrf
         <input type="hidden" name="days" value="{{ $days }}">
         <button class="days_list">日付一覧</button>
       </form>

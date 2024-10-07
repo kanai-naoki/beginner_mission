@@ -6,6 +6,9 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Rest;
+use App\Models\Attendance;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -19,6 +22,12 @@ class Kernel extends ConsoleKernel
         // 毎日午前0時になったら、勤務終了していないレコードを全て埋めて、翌日の打刻をさせる。
         $schedule->call(function () {
             
+            // 休憩終了処理
+            $rest_out = [
+                'rest_end_time' => Carbon::now()
+            ];
+            Rest::where('rest_end_time', null)->update($rest_out);
+
             // 勤務終了処理
             $work_out = [
                 'work_end_time' => Carbon::now()
@@ -32,7 +41,7 @@ class Kernel extends ConsoleKernel
                 'work_begin_time' => Carbon::now()
             ];       
             Attendance::create($work_start);
-            
+
         })->daily();
     }
 
