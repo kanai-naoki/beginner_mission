@@ -15,15 +15,12 @@ use App\Models\Attendance;
 
 class AttendanceController extends Controller
 {
-   public function index()
-   {
+    public function index()
+    {
         $user = Auth::user();
         $days = Carbon::today()->toDateString();
         return view('index', compact('user', 'days'));
-   }
-
-    // 日をまたいだ時点で、勤務終了処理、翌日の勤務開始処理を行うように条件分岐させる
-    // if {Carbon::tomorrow('Asia/Tokyo');
+    }
 
     // 出勤時：日付・出勤時刻のカラムのみを追加する
     public function workBegin()
@@ -70,7 +67,6 @@ class AttendanceController extends Controller
        
         return view('attendance', compact('attendance_lists', 'date_format'));
         
-        // ↓ページネーション生成まで移動
 
         // ※参考：pdo操作によって加工データを取得する方法
 
@@ -96,38 +92,26 @@ class AttendanceController extends Controller
 
         // $paginatorDatas = new LengthAwarePaginator($pageData, $attendance_lists->count(), $perPage, $page, $options);
         
-        // return view('attendance', compact('attendance_lists'));
     }
-
-    // public function index(Request $request)
-    // {
-        // $date = $request->input('date');
-        // if(isset($date)){
-            // $today = Carbon::parse($date);
-            // $yesterday = $today->copy()->subDay(1)->format('Y/m/d');
-            // $tomorrow = $today->copy()->addDay(1)->format('Y/m/d');
-            // $records = Time::where('date', [$date])->paginate(5);
-        // }else{
-            // $today = Carbon::today();
-            // $yesterday = $today->copy()->subDay(1)->format('Y/m/d');
-            // $tomorrow = $today->copy()->addDay(1)->format('Y/m/d');
-            // $date = $today->format('Y/m/d');
-            // $records = Time::where('date', [$date])->paginate(5);
-        // };
-    // }
 
     //ユーザー一覧ページ
     public function userAll ()
     {
+        $days = Carbon::today()->toDateString();
         $sorts = User::Paginate(5);
-        return view('user_list', compact('sorts'));
+        return view('user_list', compact('sorts','days'));
     }
 
     // ユーザー勤怠詳細ページ
     public function userDetail (Request $request)
     { 
-        $user_name = $request->all();
-        $user = collect($user_name);
+        $input = [
+            'days' => Carbon::today()->toDateString(),
+            'name' => $request->name 
+        ];
+
+        $user = collect($input);
+
         $attendance_details = Attendance::select('name', 'user_id', 'attendance_id', 'date', 'work_begin_time', 'work_end_time', DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time)))) as rest_total_time, TIMEDIFF(TIMEDIFF(work_end_time, work_begin_time), SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(rest_end_time, rest_begin_time))))) as work_really_time'))
             ->join('users', 'attendances.user_id', '=', 'users.id')
             ->join('rests', 'attendances.id', '=', 'rests.attendance_id')

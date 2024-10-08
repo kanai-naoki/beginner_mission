@@ -11,7 +11,10 @@
       <a href="/">ホーム</a>
     </li>
     <li class="header-nav-item">
-      <a href="/user/attendance">日付一覧</a>
+      <form class="header_sort" action="/user/attendance" method="get">
+        <input type="hidden" name="days" value="{{ $user['days'] }}">
+        <button class="days_list">日付一覧</button>
+      </form>
     </li>
     <li class="header-nav-item">
       <form class="form" action="{{ route('logout') }}" method="post">
