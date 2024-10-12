@@ -67,6 +67,14 @@ return [
             'days' => 14,
         ],
 
+        'schedule' => [
+            'driver'     => 'daily',
+            'path'       => storage_path('logs/laravel.log'),
+            'level'      => 'info',
+            'permission' => 0666,
+            'days'       => 7,
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),

@@ -15,7 +15,7 @@ a {
 
 .days_list,
 .logout_button {
-    width: 80px;
+    width: 90px;
     background-color: #ffffff;
     border-style: none;
     font-size: 15px;
@@ -28,7 +28,10 @@ a {
 }
 
 .timestamp_header {
-    padding: 20px auto;    
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto;
+    text-align: center;
 }
 
 .timestamp_form_area {
@@ -53,7 +56,7 @@ a {
 }
 
 .form {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
 }    

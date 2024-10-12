@@ -30,10 +30,11 @@ a {
     display: inline-block;
 }
 
-.dete_search_subday,
-.date_search_day,
-.dete_search_addday {
-    
+.days_list {
+    border-style: none;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
 }
 
 .search_result_area {
