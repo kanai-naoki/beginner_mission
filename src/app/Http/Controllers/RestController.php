@@ -15,6 +15,7 @@ class RestController extends Controller
     public function restBegin()
     {   
         $attendance_id = Attendance::find(Auth::id())->whereDate('date', Carbon::today()->toDateString())->first();
+        
         $off_start = [
             'attendance_id' => $attendance_id->id,  
             'rest_begin_time' => Carbon::now()

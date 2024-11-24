@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<script src="{{ asset('/js/search.js') }}"></script>
 @endsection
 
 @section('nav')
